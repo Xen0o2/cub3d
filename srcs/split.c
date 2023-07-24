@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alecoutr <alecoutr@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 16:51:24 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/07/22 16:51:28 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/07/22 19:45:55 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	next_word_length(char const *s, char c)
+int	next_word_length(char *s, char c)
 {
 	int	length;
 
@@ -27,7 +27,7 @@ int	next_word_length(char const *s, char c)
 	return (length);
 }
 
-int	get_sep_nbr(char const *s, char c)
+int	get_sep_nbr(char *s, char c)
 {
 	int	count;
 
@@ -65,7 +65,7 @@ char	**ft_freeall(char **tab, int length)
 	return (0);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char *s, char c)
 {
 	t_split	all;
 
