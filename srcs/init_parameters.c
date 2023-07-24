@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   init_parameters.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alecoutr <alecoutr@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 21:16:07 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/07/22 21:41:41 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/07/24 11:24:56 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,22 @@ void	verif_args(int ac, char **av, t_game *game)
 	int		fd;
 
 	if (ac != 2)
-		exit_error("Error\nUsage: ./cub3d <map.cub>\n");
+		exit_error("Error\nUsage: ./cub3d <map.cub>\n", game);
 	extension = ft_substr(av[1], ft_strlen(av[1]) - 4, 4);
 	if (ft_strcmp(extension, ".cub"))
 	{
 		free(extension);
-		exit_error("Error\nUsage: ./cub3d <map.cub>\n");
+		exit_error("Error\nUsage: ./cub3d <map.cub>\n", game);
 	}
 	free(extension);
 	fd = open(av[1], O_RDONLY);
 	if (fd == -1)
-		exit_error("Error\nCan't open map file\n");
+		exit_error("Error\nCan't open map file\n", game);
 	else
 		game->fd = fd;
 }
 
-void	init_game(t_game *game)
+void	init_parameters(t_game *game)
 {
 	game->NO_TEXTURE = NULL;
 	game->SO_TEXTURE = NULL;
@@ -67,7 +67,7 @@ void	parse_parameters(t_game *game)
 	}
 	free(line);
 	if (count != 6 || parameter_is_null(game))
-		(void)0, free_parameters(game), exit_error("Error\nInvalid parameters\n");
+		exit_error("Error\nInvalid parameters\n", game);
 }
 
 int	parameter_is_null(t_game *game)
@@ -83,16 +83,16 @@ int	parameter_is_null(t_game *game)
 int	update_parameter(t_game *game, char **infos)
 {
 	if (!ft_strcmp(infos[0], "NO"))
-		return (game->NO_TEXTURE = ft_strdup(infos[1]), 1);
+		return (game->NO_TEXTURE = ft_substr(infos[1], 0, ft_strlen(infos[1]) - 1), 1);
 	else if (!ft_strcmp(infos[0], "SO"))
-		return (game->SO_TEXTURE = ft_strdup(infos[1]), 1);
+		return (game->SO_TEXTURE = ft_substr(infos[1], 0, ft_strlen(infos[1]) - 1), 1);
 	else if (!ft_strcmp(infos[0], "WE"))
-		return (game->WE_TEXTURE = ft_strdup(infos[1]), 1);
+		return (game->WE_TEXTURE = ft_substr(infos[1], 0, ft_strlen(infos[1]) - 1), 1);
 	else if (!ft_strcmp(infos[0], "EA"))
-		return (game->EA_TEXTURE = ft_strdup(infos[1]), 1);
+		return (game->EA_TEXTURE = ft_substr(infos[1], 0, ft_strlen(infos[1]) - 1), 1);
 	else if (!ft_strcmp(infos[0], "F"))
-		return (game->F_COLOR = ft_strdup(infos[1]), 1);
+		return (game->F_COLOR = ft_substr(infos[1], 0, ft_strlen(infos[1]) - 1), 1);
 	else if (!ft_strcmp(infos[0], "C"))
-		return (game->C_COLOR = ft_strdup(infos[1]), 1);
+		return (game->C_COLOR = ft_substr(infos[1], 0, ft_strlen(infos[1]) - 1), 1);
 	return (0);
 }

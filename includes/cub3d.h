@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alecoutr <alecoutr@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 13:39:38 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/07/22 21:42:24 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/07/24 11:43:07 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,16 @@ typedef struct s_split
 	int		length;
 }	t_split;
 
-void	exit_error(char *message);
+void	exit_error(char *message, t_game *game);
 
 // INIT
 void	verif_args(int ac, char **av, t_game *game);
-void	init_game(t_game *game);
+void	init_parameters(t_game *game);
 void	parse_parameters(t_game *game);
 int		parameter_is_null(t_game *game);
 int		update_parameter(t_game *game, char **infos);
+void	init_map(t_game *game);
+
 
 // FREE
 void	free_all(char **tab);
@@ -79,6 +81,7 @@ char	*ft_strchr(char *s, char c);
 char	*ft_strjoin(char *s1, char *s2);
 int		ft_strrlen(char **strr);
 char	*ft_strdup(char *s1);
+int		is_whitespace(char c);
 int		is_empty(char *line);
 
 // GET_NEXT_LINE

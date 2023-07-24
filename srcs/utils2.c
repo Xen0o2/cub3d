@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alecoutr <alecoutr@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 16:53:02 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/07/22 21:45:02 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/07/24 11:42:33 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,21 @@ char	*ft_strdup(char *s1)
 	return (s2);
 }
 
+int	is_whitespace(char c)
+{
+	return (c == ' '
+			|| c == '\n'
+			|| c == '\t'
+			|| c == '\v'
+			|| c == '\f'
+			|| c == '\r');
+}
+
 int	is_empty(char *line)
 {
 	while (*line)
 	{
-		if (*line != ' '
-			&& *line != '\t'
-			&& *line != '\v'
-			&& *line != '\f'
-			&& *line != '\r')
+		if (!is_whitespace(*line))
 			return (0);
 		line++;
 	}
