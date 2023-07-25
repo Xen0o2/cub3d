@@ -6,7 +6,7 @@
 /*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 21:16:07 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/07/24 11:24:56 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/07/25 10:00:58 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,17 @@ void	verif_args(int ac, char **av, t_game *game)
 
 void	init_parameters(t_game *game)
 {
+	game->map_info = malloc(sizeof(t_map_info));
+	if (!game->map_info)
+		exit_error("Error\nMalloc failed\n", game);
 	game->NO_TEXTURE = NULL;
 	game->SO_TEXTURE = NULL;
 	game->WE_TEXTURE = NULL;
 	game->EA_TEXTURE = NULL;
 	game->F_COLOR = NULL;
 	game->C_COLOR = NULL;
+	game->map_info->height = 0;
+	game->map_info->width = 0;
 	parse_parameters(game);
 }
 
@@ -83,16 +88,16 @@ int	parameter_is_null(t_game *game)
 int	update_parameter(t_game *game, char **infos)
 {
 	if (!ft_strcmp(infos[0], "NO"))
-		return (game->NO_TEXTURE = ft_substr(infos[1], 0, ft_strlen(infos[1]) - 1), 1);
+		return (game->NO_TEXTURE = ft_strdup(infos[1]), 1);
 	else if (!ft_strcmp(infos[0], "SO"))
-		return (game->SO_TEXTURE = ft_substr(infos[1], 0, ft_strlen(infos[1]) - 1), 1);
+		return (game->SO_TEXTURE = ft_strdup(infos[1]), 1);
 	else if (!ft_strcmp(infos[0], "WE"))
-		return (game->WE_TEXTURE = ft_substr(infos[1], 0, ft_strlen(infos[1]) - 1), 1);
+		return (game->WE_TEXTURE = ft_strdup(infos[1]), 1);
 	else if (!ft_strcmp(infos[0], "EA"))
-		return (game->EA_TEXTURE = ft_substr(infos[1], 0, ft_strlen(infos[1]) - 1), 1);
+		return (game->EA_TEXTURE = ft_strdup(infos[1]), 1);
 	else if (!ft_strcmp(infos[0], "F"))
-		return (game->F_COLOR = ft_substr(infos[1], 0, ft_strlen(infos[1]) - 1), 1);
+		return (game->F_COLOR = ft_strdup(infos[1]), 1);
 	else if (!ft_strcmp(infos[0], "C"))
-		return (game->C_COLOR = ft_substr(infos[1], 0, ft_strlen(infos[1]) - 1), 1);
+		return (game->C_COLOR = ft_strdup(infos[1]), 1);
 	return (0);
 }

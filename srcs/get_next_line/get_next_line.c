@@ -6,7 +6,7 @@
 /*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/20 17:40:37 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/07/22 14:09:23 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/07/25 09:21:15 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*get_one_line(char *all)
 
 	if (!all[0])
 		return (0);
-	line = malloc((ft_strlen(all) + 2) * sizeof(char));
+	line = malloc((ft_strlen(all) + 1) * sizeof(char));
 	if (!line)
 		return (0);
 	i = 0;
@@ -48,8 +48,6 @@ char	*get_one_line(char *all)
 		line[i] = all[i];
 		i++;
 	}
-	if (all[i] == '\n')
-		line[i++] = '\n';
 	line[i] = 0;
 	return (line);
 }

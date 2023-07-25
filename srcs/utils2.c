@@ -6,7 +6,7 @@
 /*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 16:53:02 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/07/24 11:42:33 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/07/25 10:04:49 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,26 @@ char	*ft_strdup(char *s1)
 	}
 	s2[len] = '\0';
 	return (s2);
+}
+
+char	**ft_strrdup(char **s1)
+{
+	char	**res;
+	int		i;
+
+	printf("Nouvelle longueur %d\n", ft_strrlen(s1) + 1);
+	res = malloc(sizeof(char *) * (ft_strrlen(s1) + 1));
+	if (!res)
+		return (NULL);
+	i = 0;
+	printf("je renvoie sans probleme");
+	while (s1[i])
+	{
+		res[i] = ft_strdup(s1[i]);
+		i++;
+	}
+	res[i] = NULL;
+	return (res);
 }
 
 int	is_whitespace(char c)

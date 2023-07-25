@@ -6,7 +6,7 @@
 /*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 13:39:38 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/07/24 11:43:07 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/07/25 10:00:43 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ typedef struct s_map_info
 	char	**map;
 	int		height;
 	int		width;	
-}	t_mapInfo;
+}	t_map_info;
 
 typedef struct s_game
 {
-	t_mapInfo	map_info;
+	t_map_info	*map_info;
 	char		*NO_TEXTURE;
 	char		*SO_TEXTURE;
 	char		*WE_TEXTURE;
@@ -77,10 +77,11 @@ void	free_parameters(t_game *game);
 int		ft_strcmp(char *s1, char *s2);
 char	*ft_substr(char *s, int start, int len);
 int		ft_strlen(char *str);
-char	*ft_strchr(char *s, char c);
-char	*ft_strjoin(char *s1, char *s2);
 int		ft_strrlen(char **strr);
 char	*ft_strdup(char *s1);
+char	**ft_strrdup(char **s1);
+char	*ft_strchr(char *s, char c);
+char	*ft_strjoin(char *s1, char *s2);
 int		is_whitespace(char c);
 int		is_empty(char *line);
 
