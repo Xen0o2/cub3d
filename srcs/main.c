@@ -6,7 +6,7 @@
 /*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 13:40:36 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/07/25 10:01:13 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/07/25 11:04:40 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ int	main(int ac, char **av)
 	init_parameters(game);
 	init_map(game);
 	
-	printf("parsing termine");
+	printf("parsing termine\n");
 	printf("Hauteur %d et largeur %d\n", game->map_info->height, game->map_info->width);
-	
-	
-	
+	int i = 0;
+	while (game->map_info->map[i])
+		printf("%s\n", game->map_info->map[i++]);
 	free_parameters(game);
 }
 // game = parse_map(av[1]);

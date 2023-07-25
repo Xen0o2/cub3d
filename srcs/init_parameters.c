@@ -6,7 +6,7 @@
 /*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 21:16:07 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/07/25 10:00:58 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/07/25 10:57:40 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void	parse_parameters(t_game *game)
 	count = 0;
 	while (line)
 	{
-		if (is_empty(line))
-			continue ;
+		while (line && is_empty(line))
+			(void)0, free(line), line = get_next_line(game->fd);
 		infos = ft_split(line, ' ');
 		if (ft_strrlen(infos) == 2)
 			count += update_parameter(game, infos);
