@@ -6,7 +6,7 @@
 #    By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/21 13:50:40 by alecoutr          #+#    #+#              #
-#    Updated: 2023/07/24 11:15:28 by alecoutr         ###   ########.fr        #
+#    Updated: 2023/07/26 10:24:52 by alecoutr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ LIBMLX	= libmlx42.a
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) -o $(NAME) $(OBJS) $(LIBMLX) $(INC)
+	$(CC) -o $(NAME) $(OBJS) $(LIBMLX) $(INC) $(INCMLX)
 
 .c.o:
 	$(CC) $(FLAGS) -c $< -o $(<:.c=.o) $(INC)

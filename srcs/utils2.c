@@ -6,7 +6,7 @@
 /*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 16:53:02 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/07/25 11:11:26 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/07/26 09:51:35 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,11 @@ char	**ft_strrdup(char **s1)
 int	is_whitespace(char c)
 {
 	return (c == ' '
-			|| c == '\n'
-			|| c == '\t'
-			|| c == '\v'
-			|| c == '\f'
-			|| c == '\r');
+		|| c == '\n'
+		|| c == '\t'
+		|| c == '\v'
+		|| c == '\f'
+		|| c == '\r');
 }
 
 int	is_empty(char *line)

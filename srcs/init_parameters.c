@@ -6,7 +6,7 @@
 /*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 21:16:07 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/07/25 10:57:40 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/07/26 11:21:18 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,9 @@ void	init_parameters(t_game *game)
 	game->map_info = malloc(sizeof(t_map_info));
 	if (!game->map_info)
 		exit_error("Error\nMalloc failed\n", game);
+	game->player = malloc(sizeof(t_player));
+	if (!game->player)
+		exit_error("Error\nMalloc failed\n", game);
 	game->NO_TEXTURE = NULL;
 	game->SO_TEXTURE = NULL;
 	game->WE_TEXTURE = NULL;
@@ -46,6 +49,8 @@ void	init_parameters(t_game *game)
 	game->C_COLOR = NULL;
 	game->map_info->height = 0;
 	game->map_info->width = 0;
+	game->player->position.x = 100;
+	game->player->position.y = 100;
 	parse_parameters(game);
 }
 

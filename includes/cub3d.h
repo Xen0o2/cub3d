@@ -6,7 +6,7 @@
 /*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 13:39:38 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/07/25 10:00:43 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/07/26 11:21:01 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@
 #  define BUFFER_SIZE 100
 # endif
 
+# define WINDOW_WIDTH 1024
+# define WINDOW_HEIGHT 512
+
 typedef struct s_map_info
 {
 	char	**map;
@@ -30,9 +33,23 @@ typedef struct s_map_info
 	int		width;	
 }	t_map_info;
 
+typedef struct s_point
+{
+	float	x;
+	float	y;
+}	t_point;
+
+typedef struct s_player
+{
+	t_point	position;
+}	t_player;
+
 typedef struct s_game
 {
 	t_map_info	*map_info;
+	t_player	*player;
+	mlx_t		*mlx;
+	mlx_image_t	*mlx_img;
 	char		*NO_TEXTURE;
 	char		*SO_TEXTURE;
 	char		*WE_TEXTURE;
