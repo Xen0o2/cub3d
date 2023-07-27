@@ -5,13 +5,12 @@
 #                                                     +:+ +:+         +:+      #
 #    By: alecoutr <alecoutr@student.42mulhouse.f    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/07/21 13:50:40 by alecoutr          #+#    #+#              #
-#    Updated: 2023/07/26 19:42:09 by alecoutr         ###   ########.fr        #
+#    Created: 2023/07/26 19:21:42 by alecoutr          #+#    #+#              #
+#    Updated: 2023/07/26 19:23:08 by alecoutr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3d
-
 SRCS =	srcs/main.c \
 		srcs/init_parameters.c \
 		srcs/init_map.c \
@@ -21,29 +20,18 @@ SRCS =	srcs/main.c \
 		srcs/split.c \
 		srcs/get_next_line/get_next_line.c
 		
-OBJS = $(SRCS:.c=.o)
 
-CC = gcc
-INC = -I ./includes
-FLAGS = -Wall -Wextra -Werror -g -g3
+GCC = gcc -Wall -Wextra -Werror
 
-LIBMLX    = libmlx42.a
-INCMLX    = -lglfw -L "/opt/homebrew/Cellar/glfw/3.3.8/lib/"
-# INCMLX    = -lglfw -L "/Users/$$USER/.brew/opt/glfw/lib/"
-
+$(NAME):
+	$(GCC) $(SRCS) -o $(NAME) libmlx42.a -I include -lglfw -L "/opt/homebrew/Cellar/glfw/3.3.8/lib/"
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	$(CC) -o $(NAME) $(OBJS) $(LIBMLX) $(INC) $(INCMLX)
-
-.c.o:
-	$(CC) $(FLAGS) -c $< -o $(<:.c=.o) $(INC)
-	
 clean:
-	rm -f $(OBJS)
+	rm $(NAME)
 
-fclean: clean
-	rm -f $(NAME)
+fclean:	clean
+	rm -rf $(NAME)
 
-re:    fclean all
+re:	fclean all

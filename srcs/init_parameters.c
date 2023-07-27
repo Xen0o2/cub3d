@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_parameters.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alecoutr <alecoutr@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 21:16:07 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/07/26 11:21:18 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/07/26 19:29:16 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

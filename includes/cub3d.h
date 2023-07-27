@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alecoutr <alecoutr@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 13:39:38 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/07/26 11:21:01 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/07/28 00:28:49 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <fcntl.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <math.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 100
@@ -25,6 +26,7 @@
 
 # define WINDOW_WIDTH 1024
 # define WINDOW_HEIGHT 512
+# define PI 3.1415926535
 
 typedef struct s_map_info
 {
@@ -76,6 +78,10 @@ typedef struct s_split
 }	t_split;
 
 void	exit_error(char *message, t_game *game);
+void	exit_success(t_game *game);
+void	hook(void *param);
+void	draw_player(t_game *game);
+void	hook_move(mlx_key_data_t keydata, void* param);
 
 // INIT
 void	verif_args(int ac, char **av, t_game *game);
@@ -84,6 +90,13 @@ void	parse_parameters(t_game *game);
 int		parameter_is_null(t_game *game);
 int		update_parameter(t_game *game, char **infos);
 void	init_map(t_game *game);
+int		is_first_wall(char *line);
+char	*get_first_wall(t_game *game);
+int		is_map_character(char c);
+void    append_to_map(t_game *game, char *line, int i);
+void	fill_map(t_game *game);
+
+
 
 
 // FREE

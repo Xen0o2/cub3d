@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alecoutr <alecoutr@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 11:16:04 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/07/26 10:39:57 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/07/26 19:29:44 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ char	*get_first_wall(t_game *game)
 int	is_map_character(char c)
 {
 	return (c == '0'
+		|| c == ' '
 		|| c == '1'
 		|| c == 'N'
 		|| c == 'S'
@@ -66,9 +67,9 @@ void    append_to_map(t_game *game, char *line, int i)
 	game->map_info->map = copy;
 }
 
-void    init_map(t_game *game)
+void	fill_map(t_game *game)
 {
-    char    *line;
+	char    *line;
     int        i;
     int        length;
     
@@ -91,4 +92,47 @@ void    init_map(t_game *game)
     }
 	free(line);
     game->map_info->height = i;
+}
+
+int	is_valid_char(t_game *game, int i, int x)
+{
+	if (!is_map_character(game->map_info->map[i][x]))
+		return (0);
+	if (game->map_info->map[i][x] != '0')
+		return (1);
+	if (!game->map_info->map[i - 1] || !game->map_info->map[i - 1][x] || game->map_info->map[i - 1][x] == ' '
+		|| !game->map_info->map[i][x - 1] || game->map_info->map[i][x - 1] == ' '
+		|| !game->map_info->map[i + 1] || !game->map_info->map[i + 1][x] || game->map_info->map[i + 1][x] == ' '
+		|| !game->map_info->map[i][x + 1] || game->map_info->map[i][x + 1] == ' ')
+		return (0);
+	return (1);
+}
+
+void	verif_map(t_game *game)
+{
+	int	i;
+	int	x;
+
+	i = 0;
+	while (game->map_info->map[i])
+	{
+		x = 0;
+		while (game->map_info->map[i][x])
+		{
+			if (!is_valid_char(game, i, x))
+			{
+				printf("%d %d %c\n", i, x, game->map_info->map[i][x]);
+				exit_error("Error\nInvalid map\n", game);
+			}
+			x++;
+		}
+		i++;
+	}
+}
+
+void    init_map(t_game *game)
+{
+	fill_map(game);
+	verif_map(game);
+	printf("map valide");
 }
