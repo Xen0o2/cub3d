@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alecoutr <alecoutr@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 21:18:33 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/07/26 19:29:24 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/07/28 11:42:39 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@ void	free_all(char **tab)
 	int	i;
 
 	i = 0;
-	while (tab[i])
+
+	while (tab && tab[i])
 		free(tab[i++]);
-	free(tab);
+	if (tab)
+		free(tab);
 }
 
 void	free_parameters(t_game *game)

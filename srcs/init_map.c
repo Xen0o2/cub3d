@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alecoutr <alecoutr@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 11:16:04 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/07/26 19:29:44 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/07/28 12:34:59 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ void	verif_map(t_game *game)
 		{
 			if (!is_valid_char(game, i, x))
 			{
+				printf("%c %c %c %c\n", game->map_info->map[i - 1][x], game->map_info->map[i][x - 1], game->map_info->map[i + 1][x], game->map_info->map[i][x + 1]);
 				printf("%d %d %c\n", i, x, game->map_info->map[i][x]);
 				exit_error("Error\nInvalid map\n", game);
 			}
@@ -134,5 +135,4 @@ void    init_map(t_game *game)
 {
 	fill_map(game);
 	verif_map(game);
-	printf("map valide");
 }

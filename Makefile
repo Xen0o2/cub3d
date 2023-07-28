@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: alecoutr <alecoutr@student.42mulhouse.f    +#+  +:+       +#+         #
+#    By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/21 13:50:40 by alecoutr          #+#    #+#              #
-#    Updated: 2023/07/26 19:42:09 by alecoutr         ###   ########.fr        #
+#    Updated: 2023/07/28 12:16:32 by alecoutr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,8 @@ NAME = cub3d
 SRCS =	srcs/main.c \
 		srcs/init_parameters.c \
 		srcs/init_map.c \
+		srcs/draw.c \
+		srcs/draw_items.c \
 		srcs/free.c \
 		srcs/utils.c \
 		srcs/utils2.c \
@@ -27,9 +29,10 @@ CC = gcc
 INC = -I ./includes
 FLAGS = -Wall -Wextra -Werror -g -g3
 
+#LIBMLX    = libmlx42maison.a
 LIBMLX    = libmlx42.a
-INCMLX    = -lglfw -L "/opt/homebrew/Cellar/glfw/3.3.8/lib/"
-# INCMLX    = -lglfw -L "/Users/$$USER/.brew/opt/glfw/lib/"
+#INCMLX    = -lglfw -L "/opt/homebrew/Cellar/glfw/3.3.8/lib/"
+INCMLX    = -lglfw -L "/Users/$$USER/.brew/opt/glfw/lib/"
 
 
 all: $(NAME)
