@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alecoutr <alecoutr@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 13:39:38 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/08/04 07:20:17 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/08/05 11:45:14 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,21 @@
 
 # define WINDOW_WIDTH 1024
 # define WINDOW_HEIGHT 512
+
+# define SQUARE_MAP_SIZE 64
+# define MAX_DOF 150
+# define MAP_S 64
+
 # define PI 3.1415926535
+# define P2 1.57079632675
+# define P3 4.71238898038
 
 typedef struct s_map_info
 {
 	char	**map;
 	int		height;
 	int		width;
+	int		minimap_square_size;
 }	t_map_info;
 
 typedef struct s_point
@@ -52,6 +60,12 @@ typedef struct s_ray
 	float	ra;
 	float	xo;
 	float	yo;
+	float	distH;
+	float	hx;
+	float	hy;
+	float	distV;
+	float	vx;
+	float	vy;
 }	t_ray;
 
 typedef struct s_player
@@ -120,11 +134,10 @@ t_point	create_point(float x, float y);
 
 // DRAW_ITEMS
 void	draw_player(t_game *game);
-void	draw_map_2d(t_game *game);
-void	draw_ray_3d(t_game *game);
-
-
-
+void	draw_minimap(t_game *game);
+void	draw_rays(t_game *game);
+void	draw_horizontal_rays(t_game *game);
+void	draw_vertical_rays(t_game *game);
 
 // FREE
 void	free_all(char **tab);
@@ -143,6 +156,8 @@ int		is_whitespace(char c);
 int		is_empty(char *line);
 float   deg_to_rad(float degree);
 float	ft_abs(int value);
+float   distance(t_point p1, t_point p2);
+
 // GET_NEXT_LINE
 char	*ft_read(int fd, char *all);
 char	*get_one_line(char *all);

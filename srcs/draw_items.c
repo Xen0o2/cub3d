@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_items.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alecoutr <alecoutr@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 12:13:33 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/08/04 16:27:24 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/08/05 11:46:59 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	draw_player(t_game *game)
 	float	y;
 	float	x;
 
-	draw_ray_3d(game);
+	draw_rays(game);
 	offset = 4;
 	y = game->player->position.y - offset - 1;
 	
@@ -33,7 +33,7 @@ void	draw_player(t_game *game)
 					create_point(game->player->position.x + game->player->delta.x * 5, game->player->position.y + game->player->delta.y * 5), 0xFFFF00FF);
 }
 
-void	draw_map_2d(t_game *game)
+void	draw_minimap(t_game *game)
 {
 	int		y;
 	int		x;
@@ -41,7 +41,7 @@ void	draw_map_2d(t_game *game)
 	t_point	points[2];
 
 	y = 0;
-	square_size = 20;
+	square_size = SQUARE_MAP_SIZE;
 	while (game->map_info->map[y])
 	{
 		x = 0;
@@ -59,58 +59,109 @@ void	draw_map_2d(t_game *game)
 	}
 }
 
-void    horizontal2(t_game *game);
-
-void	draw_ray_3d(t_game *game)
+void	draw_rays(t_game *game)
 {
-    game->player->ray.dof = 0;
-	game->player->ray.ra = game->player->angle;
-	float	a_tan = -1 / tan(game->player->ray.ra);
-	int		map_s = 8;
-    if (game->player->ray.ra > PI)
-    {
-        game->player->ray.ry = (((int)game->player->position.y / map_s) * map_s) - 0.0001;
-        game->player->ray.rx = (game->player->position.y - game->player->ray.ry) * a_tan + game->player->position.x;
-        game->player->ray.yo = -map_s;
-        game->player->ray.xo = -game->player->ray.yo * a_tan;
-    }
-    else if (game->player->ray.ra < PI)
-    {
-        game->player->ray.ry = (((int)game->player->position.y / map_s) * map_s) + map_s;
-        game->player->ray.rx = (game->player->position.y - game->player->ray.ry) * a_tan + game->player->position.x;
-        game->player->ray.yo = map_s;
-        game->player->ray.xo = -game->player->ray.yo * a_tan;
-    }
-    else
-    {
-        game->player->ray.ry = game->player->position.y;
-        game->player->ray.rx = game->player->position.x;
-        game->player->ray.dof = 8;
-    }
-    horizontal2(game);
+	game->player->ray.r = 0;
+	while (game->player->ray.r < 1)
+	{
+		draw_horizontal_rays(game);
+		draw_vertical_rays(game);
+		game->player->ray.r++;
+	}
 }
 
-void    horizontal2(t_game *game)
+void	draw_horizontal_rays(t_game *game)
 {
-	int		map_s = game->map_info->height * game->map_info->width;
-	
-    while (game->player->ray.dof < 8)
-    {
-        game->player->ray.mx = (int)(game->player->ray.rx) / map_s;
-        game->player->ray.my = (int)(game->player->ray.ry) / map_s;
-		printf("%d %d %f %f\n", game->player->ray.mx, game->player->ray.my, game->player->ray.rx, game->player->ray.ry);
-        if (game->player->ray.mx >= 0 && game->player->ray.my >= 0 && game->player->ray.mx < game->map_info->width
-            && game->player->ray.my < game->map_info->height
-            && game->map_info->map[game->player->ray.my][game->player->ray.mx] == '1')
-			{
-            	game->player->ray.dof = 8;
-			}
-        else
-        {
+	float	a_tan;
+
+	game->player->ray.hx = game->player->position.x;
+	game->player->ray.hy = game->player->position.y;
+	game->player->ray.ra = game->player->angle;
+	a_tan = -1 / tan(game->player->ray.ra);
+	game->player->ray.dof = 0;
+	if (game->player->ray.ra > PI)
+	{
+		game->player->ray.ry = (((int)game->player->position.y / MAP_S) * MAP_S) - 0.0001;
+		game->player->ray.rx = (game->player->position.y - game->player->ray.ry) * a_tan + game->player->position.x;
+		game->player->ray.yo = -MAP_S;
+		game->player->ray.xo = -game->player->ray.yo * a_tan;
+	}
+	else if (game->player->ray.ra < PI)
+	{
+		game->player->ray.ry = (((int)game->player->position.y / MAP_S) * MAP_S) + MAP_S;
+		game->player->ray.rx = (game->player->position.y - game->player->ray.ry) * a_tan + game->player->position.x;
+		game->player->ray.yo = MAP_S;
+		game->player->ray.xo = -game->player->ray.yo * a_tan;
+	}
+	else
+	{
+		game->player->ray.ry = game->player->position.y;
+		game->player->ray.rx = game->player->position.x;
+		game->player->ray.dof = MAX_DOF;
+	}
+	while (game->player->ray.dof < MAX_DOF)
+	{
+		game->player->ray.mx = (int)(game->player->ray.rx) / MAP_S;
+		game->player->ray.my = (int)(game->player->ray.ry) / MAP_S;
+		if (game->player->ray.mx >= 0 && game->player->ray.my >= 0 && game->player->ray.mx < game->map_info->width
+			&& game->player->ray.my < game->map_info->height
+			&& game->map_info->map[game->player->ray.my][game->player->ray.mx] == '1')
+		{
+			game->player->ray.hx = game->player->ray.rx;
+			game->player->ray.hy = game->player->ray.ry;
+			game->player->ray.distH = distance(create_point(game->player->position.x, game->player->position.y), create_point(game->player->ray.hx, game->player->ray.hy));
+			game->player->ray.dof = MAX_DOF;
+		}
+		else
+		{
 			game->player->ray.rx += game->player->ray.xo;
 			game->player->ray.ry += game->player->ray.yo;
 			game->player->ray.dof++;
 		}
-    }
-	draw_line(game, create_point(game->player->position.x, game->player->position.y), create_point(game->player->ray.rx, game->player->ray.ry), 0x00FF00FF);
+	}
+}
+
+void    draw_vertical_rays(t_game *game)
+{
+    float	ntan;
+
+	ntan = -tan(game->player->ray.ra);
+	game->player->ray.vx = game->player->position.x;
+	game->player->ray.vy = game->player->position.y;
+	game->player->ray.dof = 0;
+	if (game->player->ray.ra > P2 && game->player->ray.ra < P3)
+	{
+		game->player->ray.rx = (((int)game->player->position.x / MAP_S) * MAP_S) - 0.0001;
+		game->player->ray.ry = (game->player->position.x - game->player->ray.rx) * ntan + game->player->position.y;
+		game->player->ray.xo = -MAP_S;
+		game->player->ray.yo = -game->player->ray.xo * ntan;
+	}
+	else if (game->player->ray.ra < P2 || game->player->ray.ra > P3)
+	{
+		game->player->ray.rx = (((int)game->player->position.x / MAP_S) * MAP_S) + MAP_S;
+		game->player->ray.ry = (game->player->position.x - game->player->ray.rx) * ntan + game->player->position.y;
+		game->player->ray.xo = MAP_S;
+		game->player->ray.yo = -game->player->ray.xo * ntan;
+	}
+	else
+	{
+		game->player->ray.ry = game->player->position.y;
+		game->player->ray.rx = game->player->position.x;
+		game->player->ray.dof = MAX_DOF;
+	}
+	while (game->player->ray.dof < MAX_DOF)
+	{
+		game->player->ray.mx = (int)(game->player->ray.rx) / MAP_S;
+		game->player->ray.my = (int)(game->player->ray.ry) / MAP_S;
+		if (game->player->ray.mx >= 0 && game->player->ray.my >= 0 && game->player->ray.mx < game->map_info->width
+			&& game->player->ray.my < game->map_info->height
+			&& game->map_info->map[game->player->ray.my][game->player->ray.mx] == '1')
+				game->player->ray.dof = MAX_DOF;
+		else
+		{
+			game->player->ray.rx += game->player->ray.xo;
+			game->player->ray.ry += game->player->ray.yo;
+			game->player->ray.dof++;
+		}
+	}
 }

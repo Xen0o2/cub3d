@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alecoutr <alecoutr@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 21:11:17 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/08/04 07:03:02 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/08/05 11:05:36 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,10 @@ float ft_abs(int value)
     if (value < 0)
         return (-value);
     return (value);
+}
+
+float   distance(t_point p1, t_point p2)
+{
+    return (sqrt((p2.x - p1.x) * (p2.x - p1.x) +
+		(p2.y - p1.y) * (p2.y - p1.y)));
 }

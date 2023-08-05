@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alecoutr <alecoutr@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 13:40:36 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/08/04 16:12:21 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/08/05 11:22:39 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	hook_move(mlx_key_data_t keydata, void* param)
 	}
 	mlx_delete_image(game->mlx, game->mlx_img);
 	game->mlx_img = mlx_new_image(game->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-	draw_map_2d(game);
+	draw_minimap(game);
 	draw_player(game);
 	mlx_image_to_window(game->mlx, game->mlx_img, 0, 0);
 }
@@ -101,7 +101,7 @@ int	main(int ac, char **av)
 	game->mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "cub3d", true);
 	game->mlx_img = mlx_new_image(game->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-	draw_map_2d(game);
+	draw_minimap(game);
 	draw_player(game);
 	mlx_image_to_window(game->mlx, game->mlx_img, 0, 0);
 	

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_parameters.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alecoutr <alecoutr@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 21:16:07 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/08/04 15:59:18 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/08/05 11:26:03 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,13 @@ void	init_parameters(t_game *game)
 	game->player->ray.ra = 0;
 	game->player->ray.xo = 0;
 	game->player->ray.yo = 0;
+	game->player->ray.distH = 1000000;
+	game->player->ray.hx = 0;
+	game->player->ray.hy = 0;
+	game->player->ray.distV = 1000000;
+	game->player->ray.vx = 0;
+	game->player->ray.vy = 0;
+	game->map_info->minimap_square_size = SQUARE_MAP_SIZE;
 }
 
 void	parse_parameters(t_game *game)
