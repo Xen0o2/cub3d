@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alecoutr <alecoutr@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 13:39:38 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/07/28 14:43:35 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/08/04 07:20:17 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 
 # define WINDOW_WIDTH 1024
 # define WINDOW_HEIGHT 512
-# define PI 3.141592653589793
+# define PI 3.1415926535
 
 typedef struct s_map_info
 {
@@ -46,7 +46,6 @@ typedef struct s_ray
 	int		r;
 	int		mx;
 	int		my;
-	int		mp;
 	int		dof;
 	float	rx;
 	float	ry;
@@ -57,8 +56,7 @@ typedef struct s_ray
 
 typedef struct s_player
 {
-	float	px;
-	float	py;
+	t_point	position;
 	t_point	delta;
 	t_ray	ray;
 	float	angle;
@@ -118,7 +116,7 @@ void	fill_map(t_game *game);
 // DRAW
 void	draw_line(t_game *game, t_point begin, t_point end, int color);
 void	draw_square(t_game *game, t_point points[2], int color);
-t_point	create_point(int x, int y);
+t_point	create_point(float x, float y);
 
 // DRAW_ITEMS
 void	draw_player(t_game *game);
@@ -143,7 +141,8 @@ char	*ft_strchr(char *s, char c);
 char	*ft_strjoin(char *s1, char *s2);
 int		is_whitespace(char c);
 int		is_empty(char *line);
-
+float   deg_to_rad(float degree);
+float	ft_abs(int value);
 // GET_NEXT_LINE
 char	*ft_read(int fd, char *all);
 char	*get_one_line(char *all);

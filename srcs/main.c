@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alecoutr <alecoutr@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 13:40:36 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/07/28 14:40:42 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/08/04 16:12:21 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,13 @@ void	hook_move(mlx_key_data_t keydata, void* param)
 	}
 	if (keydata.key == MLX_KEY_W)
 	{
-		game->player->px += game->player->delta.x;
-		game->player->py += game->player->delta.y;
+		game->player->position.x += game->player->delta.x;
+		game->player->position.y += game->player->delta.y;
 	}
 	if (keydata.key == MLX_KEY_S)
 	{
-		game->player->px -= game->player->delta.x;
-		game->player->py -= game->player->delta.y;
+		game->player->position.x -= game->player->delta.x;
+		game->player->position.y -= game->player->delta.y;
 	}
 	mlx_delete_image(game->mlx, game->mlx_img);
 	game->mlx_img = mlx_new_image(game->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);

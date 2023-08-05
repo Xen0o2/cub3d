@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_parameters.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alecoutr <alecoutr@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 21:16:07 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/07/28 14:42:22 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/08/04 15:59:18 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,14 @@ void	init_parameters(t_game *game)
 	game->C_COLOR = NULL;
 	game->map_info->height = 0;
 	game->map_info->width = 0;
-	game->player->px = 80;
-	game->player->py = 80;
-	game->player->angle = 0;
+	game->player->position.x = 80;
+	game->player->position.y = 80;
+	game->player->angle = deg_to_rad(1);
 	game->player->delta.x = cos(game->player->angle) * 5;
 	game->player->delta.y = sin(game->player->angle) * 5;
 	game->player->ray.r = 0;
 	game->player->ray.mx = 0;
 	game->player->ray.my = 0;
-	game->player->ray.mp = 0;
 	game->player->ray.dof = 0;
 	game->player->ray.rx = 0;
 	game->player->ray.ry = 0;

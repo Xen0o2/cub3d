@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+         #
+#    By: alecoutr <alecoutr@student.42mulhouse.f    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/21 13:50:40 by alecoutr          #+#    #+#              #
-#    Updated: 2023/07/28 12:16:32 by alecoutr         ###   ########.fr        #
+#    Updated: 2023/07/28 21:12:28 by alecoutr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRCS =	srcs/main.c \
 		srcs/free.c \
 		srcs/utils.c \
 		srcs/utils2.c \
+		srcs/utils3.c \
 		srcs/split.c \
 		srcs/get_next_line/get_next_line.c
 		
@@ -29,10 +30,10 @@ CC = gcc
 INC = -I ./includes
 FLAGS = -Wall -Wextra -Werror -g -g3
 
-#LIBMLX    = libmlx42maison.a
-LIBMLX    = libmlx42.a
-#INCMLX    = -lglfw -L "/opt/homebrew/Cellar/glfw/3.3.8/lib/"
-INCMLX    = -lglfw -L "/Users/$$USER/.brew/opt/glfw/lib/"
+LIBMLX    = libmlx42maison.a
+# LIBMLX    = libmlx42.a
+INCMLX    = -lglfw -L "/opt/homebrew/Cellar/glfw/3.3.8/lib/"
+# INCMLX    = -lglfw -L "/Users/$$USER/.brew/opt/glfw/lib/"
 
 
 all: $(NAME)

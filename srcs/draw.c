@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alecoutr <alecoutr@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 12:14:53 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/07/28 12:24:28 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/08/04 15:54:55 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_point	create_point(int x, int y)
+t_point	create_point(float x, float y)
 {
 	t_point	point;
 
-	point.x = x;
-	point.y = y;
+	point.x = (int)x;
+	point.y = (int)y;
 	return (point);
 }
 
