@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_parameters.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alecoutr <alecoutr@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 21:16:07 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/08/05 11:26:03 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/08/07 20:52:40 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	init_parameters(t_game *game)
 	game->player->ray.distV = 1000000;
 	game->player->ray.vx = 0;
 	game->player->ray.vy = 0;
+	game->player->ray.distT = 0;
 	game->map_info->minimap_square_size = SQUARE_MAP_SIZE;
 }
 

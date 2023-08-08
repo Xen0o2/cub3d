@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alecoutr <alecoutr@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 13:39:38 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/08/05 11:45:14 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/08/08 13:45:28 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,13 @@
 # define WINDOW_HEIGHT 512
 
 # define SQUARE_MAP_SIZE 64
-# define MAX_DOF 150
+# define MAX_DOF 8
 # define MAP_S 64
 
 # define PI 3.1415926535
-# define P2 1.57079632675
-# define P3 4.71238898038
+# define P2 PI / 2
+# define P3 3 * PI / 2
+# define DR 0.0174533
 
 typedef struct s_map_info
 {
@@ -66,6 +67,7 @@ typedef struct s_ray
 	float	distV;
 	float	vx;
 	float	vy;
+	float	distT;
 }	t_ray;
 
 typedef struct s_player

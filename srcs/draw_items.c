@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_items.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alecoutr <alecoutr@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 12:13:33 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/08/05 11:46:59 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/08/08 16:17:47 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,62 @@ void	draw_minimap(t_game *game)
 
 void	draw_rays(t_game *game)
 {
+	float	lineH;
+	float	lineO;
+	float	ca;
+	int		i;
+	int		color;
+	
+	game->player->ray.ra = game->player->angle - DR * 30;
+	if (game->player->ray.ra < 0)
+		game->player->ray.ra += 2 * PI;
+	if (game->player->ray.ra > 2 * PI)
+		game->player->ray.ra -= 2 * PI;
+	
 	game->player->ray.r = 0;
-	while (game->player->ray.r < 1)
+	while (game->player->ray.r < 120)
 	{
+		game->player->ray.distH = 1000000;
+		game->player->ray.distV = 1000000;
 		draw_horizontal_rays(game);
 		draw_vertical_rays(game);
+
+		if (game->player->ray.distV < game->player->ray.distH)
+		{
+			game->player->ray.rx = game->player->ray.vx;
+			game->player->ray.ry = game->player->ray.vy;
+			game->player->ray.distT = game->player->ray.distV;
+			color = 0xFF0000FF;
+		}
+		if (game->player->ray.distH < game->player->ray.distV)
+		{
+			game->player->ray.rx = game->player->ray.hx;
+			game->player->ray.ry = game->player->ray.hy;
+			game->player->ray.distT = game->player->ray.distH;
+			color = 0x00FF00FF;
+		}
+		
+		ca = game->player->angle - game->player->ray.ra;
+		if (ca < 0)
+			ca += 2 * PI;
+		if (ca > 2 * PI)
+			ca -= 2 * PI;
+		game->player->ray.distT = game->player->ray.distT * cos(ca);
+		lineH = (MAP_S * 320) / game->player->ray.distT;
+		if (lineH > 320)
+			lineH = 320;
+		lineO = 160 - lineH / 2;
+		i = -1;
+		while (++i < 4)
+			draw_line(game, create_point(game->player->ray.r * 4 + 530 + i, lineO), create_point(game->player->ray.r * 4 + 530 + i, lineH + lineO), color);
+		
+		draw_line(game, create_point(game->player->position.x, game->player->position.y), create_point(game->player->ray.rx, game->player->ray.ry), color);
 		game->player->ray.r++;
+		game->player->ray.ra += DR / 2;
+		if (game->player->ray.ra < 0)
+			game->player->ray.ra += 2 * PI;
+		if (game->player->ray.ra > 2 * PI)
+			game->player->ray.ra -= 2 * PI;
 	}
 }
 
@@ -74,11 +124,10 @@ void	draw_horizontal_rays(t_game *game)
 {
 	float	a_tan;
 
-	game->player->ray.hx = game->player->position.x;
-	game->player->ray.hy = game->player->position.y;
-	game->player->ray.ra = game->player->angle;
 	a_tan = -1 / tan(game->player->ray.ra);
 	game->player->ray.dof = 0;
+	game->player->ray.hx = game->player->position.x;
+	game->player->ray.hy = game->player->position.y;
 	if (game->player->ray.ra > PI)
 	{
 		game->player->ray.ry = (((int)game->player->position.y / MAP_S) * MAP_S) - 0.0001;
@@ -126,9 +175,9 @@ void    draw_vertical_rays(t_game *game)
     float	ntan;
 
 	ntan = -tan(game->player->ray.ra);
+	game->player->ray.dof = 0;
 	game->player->ray.vx = game->player->position.x;
 	game->player->ray.vy = game->player->position.y;
-	game->player->ray.dof = 0;
 	if (game->player->ray.ra > P2 && game->player->ray.ra < P3)
 	{
 		game->player->ray.rx = (((int)game->player->position.x / MAP_S) * MAP_S) - 0.0001;
@@ -156,7 +205,12 @@ void    draw_vertical_rays(t_game *game)
 		if (game->player->ray.mx >= 0 && game->player->ray.my >= 0 && game->player->ray.mx < game->map_info->width
 			&& game->player->ray.my < game->map_info->height
 			&& game->map_info->map[game->player->ray.my][game->player->ray.mx] == '1')
-				game->player->ray.dof = MAX_DOF;
+		{
+			game->player->ray.vx = game->player->ray.rx;
+			game->player->ray.vy = game->player->ray.ry;
+			game->player->ray.distV = distance(create_point(game->player->position.x, game->player->position.y), create_point(game->player->ray.vx, game->player->ray.vy));
+			game->player->ray.dof = MAX_DOF;
+		}
 		else
 		{
 			game->player->ray.rx += game->player->ray.xo;
