@@ -6,7 +6,7 @@
 /*   By: alecoutr <alecoutr@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:32:49 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/08/16 16:14:05 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/08/16 16:16:25 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,5 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 		else
 			game->player->speed = 5;
 	}
-	mlx_delete_image(game->mlx, game->mlx_img);
-	game->mlx_img = mlx_new_image(game->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-	draw_walls(game);
-	if (game->draw_minimap)
-		draw_minimap(game);
-	mlx_image_to_window(game->mlx, game->mlx_img, 0, 0);
-	mlx_resize_image(game->mlx_img, game->window_width, game->window_height);
+	load_render(game);
 }
