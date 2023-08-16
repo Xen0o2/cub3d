@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alecoutr <alecoutr@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 13:39:38 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/08/16 11:57:37 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/08/16 16:17:24 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ typedef struct s_player
 	float	angle;
 	int		in_game;
 	int		speed;
+	int		in_chat;
+	char	*message;
 }	t_player;
 
 
