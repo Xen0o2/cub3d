@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alecoutr <alecoutr@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 12:14:53 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/08/05 11:22:29 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/08/15 11:58:47 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	draw_line(t_game *game, t_point begin, t_point end, int color)
 	pixelY = begin.y;
 	while (pixels)
 	{
-		if (pixelX >= 0 && pixelX < WINDOW_WIDTH && pixelY >= 0 && pixelY < WINDOW_HEIGHT)
+		if (pixelX >= 0 && pixelX < game->window_width && pixelY >= 0 && pixelY < game->window_height)
 			mlx_put_pixel(game->mlx_img, pixelX, pixelY, color);
 		pixelX += deltaX;
 		pixelY += deltaY;

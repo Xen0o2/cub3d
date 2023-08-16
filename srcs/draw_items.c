@@ -6,7 +6,7 @@
 /*   By: alecoutr <alecoutr@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 12:13:33 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/08/08 16:17:47 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/08/16 09:59:51 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,39 @@
 
 void	draw_player(t_game *game)
 {
-	float	offset;
-	float	y;
-	float	x;
+	t_point	points[2];
+	int		square_size;
 
-	draw_rays(game);
-	offset = 4;
-	y = game->player->position.y - offset - 1;
+	square_size = 3;
+	if (game->map_info->height > 50 || game->map_info->width > 50)
+		square_size = 1;
+	points[0] = create_point(
+		(game->player->position.x / 64 * square_size + 10) - 1,
+		(game->player->position.y / 64 * square_size + 10) - 1);
+	points[1] = create_point(
+		(game->player->position.x / 64 * square_size + 10) + 1,
+		(game->player->position.y / 64 * square_size + 10) + 1);
+	draw_square(game, points, 0xFF0000FF);
+}
+
+void	draw_tile(t_game *game, int square_size, int x, int y)
+{
+	t_point	points[2];
+	int		color;
 	
-	while (++y < game->player->position.y + offset)
-	{
-		x = game->player->position.x - offset - 1;
-		while (++x < game->player->position.x + offset)
-			if (x >= 0 && y >= 0 && x < WINDOW_WIDTH && y < WINDOW_HEIGHT)
-				mlx_put_pixel(game->mlx_img, x, y, 0xFFFF00FF);	
-	}
-	draw_line(game, create_point(game->player->position.x, game->player->position.y),
-					create_point(game->player->position.x + game->player->delta.x * 5, game->player->position.y + game->player->delta.y * 5), 0xFFFF00FF);
+	points[0] = create_point(x * square_size + 10, y * square_size + 10);
+			points[1] = create_point(x * square_size + square_size + 10,
+					y * square_size + square_size + 10);
+			if (game->C_COLOR > 0xFFFFFFFF / 2)
+				color = 0x000000FF;
+			else
+				color = 0xFFFFFFFF;
+			if (game->map_info->map[y][x] == '1')
+				draw_square(game, points, game->C_COLOR);
+			if (is_map_character(game->map_info->map[y][x])
+					&& game->map_info->map[y][x] != ' '
+					&& game->map_info->map[y][x] != '1')
+				draw_square(game, points, color);
 }
 
 void	draw_minimap(t_game *game)
@@ -38,85 +54,108 @@ void	draw_minimap(t_game *game)
 	int		y;
 	int		x;
 	int		square_size;
-	t_point	points[2];
 
 	y = 0;
-	square_size = SQUARE_MAP_SIZE;
+	square_size = 3;
+	if (game->map_info->height > 50 || game->map_info->width > 50)
+		square_size = 3;
 	while (game->map_info->map[y])
 	{
 		x = 0;
 		while (game->map_info->map[y][x])
-		{
-			points[0] = create_point(x * square_size + 1, y * square_size + 1);
-			points[1] = create_point(x * square_size + square_size - 1, y * square_size + square_size - 1);
-			if (game->map_info->map[y][x] == '1')
-				draw_square(game, points, 0xFFFFFFFF);
-			else if (game->map_info->map[y][x] == '0')
-				draw_square(game, points, 0x000000FF);
-			x++;
-		}
+			draw_tile(game, square_size, x++, y);
 		y++;
 	}
+	draw_player(game);
+}
+
+void	fix_value(float *value)
+{
+	if (*value < 0)
+		*value += 2 * PI;
+	if (*value > 2 * PI)
+		*value -= 2 * PI;	
 }
 
 void	draw_rays(t_game *game)
-{
-	float	lineH;
-	float	lineO;
-	float	ca;
-	int		i;
-	int		color;
-	
+{	
+	int	y;
 	game->player->ray.ra = game->player->angle - DR * 30;
-	if (game->player->ray.ra < 0)
-		game->player->ray.ra += 2 * PI;
-	if (game->player->ray.ra > 2 * PI)
-		game->player->ray.ra -= 2 * PI;
+	fix_value(&game->player->ray.ra);
 	
 	game->player->ray.r = 0;
-	while (game->player->ray.r < 120)
+	while (game->player->ray.r < 480)
 	{
 		game->player->ray.distH = 1000000;
 		game->player->ray.distV = 1000000;
 		draw_horizontal_rays(game);
 		draw_vertical_rays(game);
-
 		if (game->player->ray.distV < game->player->ray.distH)
 		{
 			game->player->ray.rx = game->player->ray.vx;
 			game->player->ray.ry = game->player->ray.vy;
 			game->player->ray.distT = game->player->ray.distV;
-			color = 0xFF0000FF;
+			if (game->player->ray.ra > deg_to_rad(90) && game->player->ray.ra < deg_to_rad(270))
+				game->player->ray.texture = game->WE_TEXTURE;
+			else
+				game->player->ray.texture = game->EA_TEXTURE;
 		}
-		if (game->player->ray.distH < game->player->ray.distV)
+		else
 		{
 			game->player->ray.rx = game->player->ray.hx;
 			game->player->ray.ry = game->player->ray.hy;
 			game->player->ray.distT = game->player->ray.distH;
-			color = 0x00FF00FF;
+			if (game->player->ray.ra > deg_to_rad(0) && game->player->ray.ra < deg_to_rad(180))
+				game->player->ray.texture = game->SO_TEXTURE;
+			else
+				game->player->ray.texture = game->NO_TEXTURE;
 		}
 		
-		ca = game->player->angle - game->player->ray.ra;
-		if (ca < 0)
-			ca += 2 * PI;
-		if (ca > 2 * PI)
-			ca -= 2 * PI;
-		game->player->ray.distT = game->player->ray.distT * cos(ca);
-		lineH = (MAP_S * 320) / game->player->ray.distT;
-		if (lineH > 320)
-			lineH = 320;
-		lineO = 160 - lineH / 2;
-		i = -1;
-		while (++i < 4)
-			draw_line(game, create_point(game->player->ray.r * 4 + 530 + i, lineO), create_point(game->player->ray.r * 4 + 530 + i, lineH + lineO), color);
-		
-		draw_line(game, create_point(game->player->position.x, game->player->position.y), create_point(game->player->ray.rx, game->player->ray.ry), color);
+		game->player->ray.ca = game->player->angle - game->player->ray.ra;
+		fix_value(&game->player->ray.ca);
+		game->player->ray.distT = game->player->ray.distT * cos(game->player->ray.ca);
+		game->player->ray.lineH = (MAP_S * (WINDOW_HEIGHT)) / game->player->ray.distT;
+		game->player->ray.ty_step = (float)game->player->ray.texture->height / (float)game->player->ray.lineH;
+		game->player->ray.ty_off = 0;
+		if (game->player->ray.lineH > WINDOW_HEIGHT)
+		{
+			game->player->ray.ty_off = (game->player->ray.lineH - WINDOW_HEIGHT) / 2.0;
+			game->player->ray.lineH = WINDOW_HEIGHT;
+		}
+		game->player->ray.lineO = WINDOW_HEIGHT / 2 - game->player->ray.lineH / 2;
+		//sky
+		draw_line(game, create_point(game->player->ray.r, 0), create_point(game->player->ray.r, game->player->ray.lineO), game->C_COLOR);
+		//walls
+
+		game->player->ray.ty = game->player->ray.ty_off * game->player->ray.ty_step;
+		if (game->player->ray.distH < game->player->ray.distV)
+		{
+			game->player->ray.tx = (int)(game->player->ray.rx / 2.0) % game->player->ray.texture->width;
+			if (game->player->ray.ra < deg_to_rad(180))
+				game->player->ray.tx = 31 - game->player->ray.tx;
+		}
+		else
+		{	
+			game->player->ray.tx = (int)(game->player->ray.ry / 2.0) % game->player->ray.texture->width;
+			if (game->player->ray.ra > deg_to_rad(90) && game->player->ray.ra < deg_to_rad(270))
+				game->player->ray.tx = 31 - game->player->ray.tx;
+		}
+		y = 0;
+		while (y < game->player->ray.lineH)
+		{
+			game->player->ray.pixel = ((int)game->player->ray.ty * game->player->ray.texture->height + (int)game->player->ray.tx) * 4;
+			game->player->ray.color.r = game->player->ray.texture->pixels[game->player->ray.pixel];
+			game->player->ray.color.g = game->player->ray.texture->pixels[game->player->ray.pixel + 1];
+			game->player->ray.color.b = game->player->ray.texture->pixels[game->player->ray.pixel + 2];
+			game->player->ray.color.a = game->player->ray.texture->pixels[game->player->ray.pixel + 3];
+			mlx_put_pixel(game->mlx_img, game->player->ray.r, y + game->player->ray.lineO, create_RGBA(game->player->ray.color.r,game->player->ray.color.g,game->player->ray.color.b,game->player->ray.color.a));
+			game->player->ray.ty += game->player->ray.ty_step;
+			y++;
+		}
+		draw_line(game, create_point(game->player->ray.r, game->player->ray.lineO + game->player->ray.lineH), create_point(game->player->ray.r, WINDOW_HEIGHT), game->F_COLOR);
 		game->player->ray.r++;
-		game->player->ray.ra += DR / 2;
-		if (game->player->ray.ra < 0)
-			game->player->ray.ra += 2 * PI;
-		if (game->player->ray.ra > 2 * PI)
-			game->player->ray.ra -= 2 * PI;
+		game->player->ray.ra += DR / 8;
+		fix_value(&game->player->ray.ra);
 	}
 }
 

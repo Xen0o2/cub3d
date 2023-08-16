@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alecoutr <alecoutr@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 11:16:04 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/07/28 12:34:59 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/08/15 16:48:11 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,18 +100,38 @@ int	is_valid_char(t_game *game, int i, int x)
 		return (0);
 	if (game->map_info->map[i][x] != '0')
 		return (1);
-	if (!game->map_info->map[i - 1] || !game->map_info->map[i - 1][x] || game->map_info->map[i - 1][x] == ' '
+	if (i == 0 || !game->map_info->map[i - 1][x] || game->map_info->map[i - 1][x] == ' '
 		|| !game->map_info->map[i][x - 1] || game->map_info->map[i][x - 1] == ' '
 		|| !game->map_info->map[i + 1] || !game->map_info->map[i + 1][x] || game->map_info->map[i + 1][x] == ' '
 		|| !game->map_info->map[i][x + 1] || game->map_info->map[i][x + 1] == ' ')
-		return (0);
+			return (0);
 	return (1);
+}
+
+void	define_spawn(t_game *game, int i, int x)
+{
+	char	c;
+
+	c = game->map_info->map[i][x];
+	game->player->position.y = i * 64 + 32;
+	game->player->position.x = x * 64 + 32;
+	if (c == 'N')
+		game->player->angle = deg_to_rad(270);
+	else if (c == 'E')
+		game->player->angle = deg_to_rad(0);
+	else if (c == 'S')
+		game->player->angle = deg_to_rad(90);
+	else if (c == 'W')
+		game->player->angle = deg_to_rad(180);
+	game->player->delta.x = cos(game->player->angle) * 5;
+	game->player->delta.y = sin(game->player->angle) * 5;
 }
 
 void	verif_map(t_game *game)
 {
-	int	i;
-	int	x;
+	int		i;
+	int		x;
+	char	c;
 
 	i = 0;
 	while (game->map_info->map[i])
@@ -120,15 +140,21 @@ void	verif_map(t_game *game)
 		while (game->map_info->map[i][x])
 		{
 			if (!is_valid_char(game, i, x))
-			{
-				printf("%c %c %c %c\n", game->map_info->map[i - 1][x], game->map_info->map[i][x - 1], game->map_info->map[i + 1][x], game->map_info->map[i][x + 1]);
-				printf("%d %d %c\n", i, x, game->map_info->map[i][x]);
 				exit_error("Error\nInvalid map\n", game);
+			c = game->map_info->map[i][x];
+			if (c == 'N' || c == 'E' || c == 'S' || c == 'W')
+			{
+				if (game->player->position.x == 0)
+					define_spawn(game, i, x);
+				else
+					exit_error("Error\nMultiple spawn point\n", game);
 			}
 			x++;
 		}
 		i++;
 	}
+	if (game->player->position.x == 0)
+		exit_error("Error\nNo spawn point defined\n", game);
 }
 
 void    init_map(t_game *game)

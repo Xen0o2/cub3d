@@ -1,12 +1,9 @@
-NO ./path_to_the_north_texture
-F 220,100,0
-EA ./path_to_the_east_texture
-
-
-SO ./path_to_the_south_texture
-C 225,30,0
-
-WE ./path_to_the_west_texture
+NO ./assets/NO_wall.png
+C 227,177,210
+EA ./assets/EA_wall.png
+SO ./assets/SO_wall.png
+F 119,181,254
+WE ./assets/WE_wall.png
 
 
 
@@ -23,5 +20,5 @@ WE ./path_to_the_west_texture
    100000001
     1000001
      10001
-      101
+      1S1
        1

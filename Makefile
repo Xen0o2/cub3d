@@ -6,7 +6,7 @@
 #    By: alecoutr <alecoutr@student.42mulhouse.f    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/21 13:50:40 by alecoutr          #+#    #+#              #
-#    Updated: 2023/08/07 11:41:45 by alecoutr         ###   ########.fr        #
+#    Updated: 2023/08/16 07:37:05 by alecoutr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,14 +14,22 @@ NAME = cub3d
 
 SRCS =	srcs/main.c \
 		srcs/init_parameters.c \
+		srcs/init_values.c \
 		srcs/init_map.c \
+		srcs/verif.c \
 		srcs/draw.c \
 		srcs/draw_items.c \
 		srcs/free.c \
 		srcs/utils.c \
 		srcs/utils2.c \
 		srcs/utils3.c \
+		srcs/utils4.c \
 		srcs/split.c \
+		srcs/exit.c \
+		srcs/hook.c \
+		srcs/key_hook.c \
+		srcs/resize_hook.c \
+		srcs/mouse_hook.c \
 		srcs/get_next_line/get_next_line.c
 		
 OBJS = $(SRCS:.c=.o)

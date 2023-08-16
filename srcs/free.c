@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alecoutr <alecoutr@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 21:18:33 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/07/28 11:42:39 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/08/08 18:13:24 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,16 @@ void	free_parameters(t_game *game)
 		free(game->WE_TEXTURE);
 	if (game->EA_TEXTURE)
 		free(game->EA_TEXTURE);
-	if (game->F_COLOR)
-		free(game->F_COLOR);
-	if (game->C_COLOR)
-		free(game->C_COLOR);
+	if (game->NO_TEXTURE_CHAR)
+		free(game->NO_TEXTURE_CHAR);
+	if (game->SO_TEXTURE_CHAR)
+		free(game->SO_TEXTURE_CHAR);
+	if (game->WE_TEXTURE_CHAR)
+		free(game->WE_TEXTURE_CHAR);
+	if (game->EA_TEXTURE_CHAR)
+		free(game->EA_TEXTURE_CHAR);
+	if (game->F_COLOR_CHAR)
+		free(game->F_COLOR_CHAR);
+	if (game->C_COLOR_CHAR)
+		free(game->C_COLOR_CHAR);
 }
