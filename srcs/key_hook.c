@@ -6,7 +6,7 @@
 /*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:32:49 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/08/16 11:11:30 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/08/16 12:20:04 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,23 +83,39 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 	t_game	*game;
 
 	game = param;
-	collision(game);
-	rotate_key(game, keydata);
-	move_key(game, keydata);
-	if (keydata.key == MLX_KEY_M && keydata.action == MLX_PRESS)
-		game->draw_minimap = !game->draw_minimap;
-	if (keydata.key == MLX_KEY_LEFT_SHIFT)
+	printf("%d %d\n", game->player->in_chat, keydata.action);
+	if (game->player->in_chat && keydata.action == MLX_PRESS)
 	{
-		if (game->player->speed == 5)
-			game->player->speed = 20;
-		else
-			game->player->speed = 5;
+		printf("je rajoute %c\n", keydata.key);
+		int i = -1;
+		char	*copy = malloc((ft_strlen(game->player->message) + 2) * sizeof(char));
+		while (game->player->message[++i])
+			copy[i] = game->player->message[i];
+		copy[i] = keydata.key;
+		copy[i + 1] = 0;
+		free(game->player->message);
+		game->player->message = copy;
+		mlx_put_string(game->mlx, game->player->message, 10, 10);
 	}
-	mlx_delete_image(game->mlx, game->mlx_img);
-	game->mlx_img = mlx_new_image(game->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-	draw_walls(game);
-	if (game->draw_minimap)
-		draw_minimap(game);
-	mlx_image_to_window(game->mlx, game->mlx_img, 0, 0);
-	mlx_resize_image(game->mlx_img, game->window_width, game->window_height);
+	else if (game->player->in_chat == 0)
+	{
+		collision(game);
+		rotate_key(game, keydata);
+		move_key(game, keydata);
+		if (keydata.key == MLX_KEY_ENTER && keydata.action == MLX_PRESS)
+		{
+			game->player->in_chat = 1;
+			game->player->message = malloc(sizeof(char));
+		}
+		if (keydata.key == MLX_KEY_M && keydata.action == MLX_PRESS)
+			game->draw_minimap = !game->draw_minimap;
+		if (keydata.key == MLX_KEY_LEFT_SHIFT)
+		{
+			if (game->player->speed == 5)
+				game->player->speed = 20;
+			else
+				game->player->speed = 5;
+		}
+		load_render(game);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 16:36:44 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/08/16 10:39:16 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/08/16 12:11:20 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ void	init_default_values3(t_game *game)
 	game->player->r.color.g = 0;
 	game->player->r.color.b = 0;
 	game->player->r.color.a = 0;
+	game->player->in_chat = 0;
+	game->player->message = NULL;
 	game->map_info->minimap_square_size = SQUARE_MAP_SIZE;
 	game->window_height = WINDOW_HEIGHT;
 	game->window_width = WINDOW_WIDTH;
