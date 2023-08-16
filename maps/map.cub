@@ -1,6 +1,6 @@
-NO              ./assets/NO_wall.png
-F        220,100,0
-C                    91,60,17
+NO ./assets/NO_wall.png
+F 220,100,0
+C 91,60,17
 EA ./assets/EA_wall.png
 SO ./assets/SO_wall.png
 WE ./assets/WE_wall.png
@@ -9,10 +9,10 @@ WE ./assets/WE_wall.png
 
 
 11111111
-10100001
+1S100001
 10100001
 10100001
 10000001
-100N0101
+10000101
 10000001
 11111111

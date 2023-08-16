@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   resize_hook.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alecoutr <alecoutr@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 07:35:18 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/08/16 07:36:34 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/08/16 11:12:34 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	resize_hook(int32_t width, int32_t height, void *param)
 {
 	t_game	*game;
-	
+
 	game = param;
 	if (height >= WINDOW_HEIGHT && width >= WINDOW_WIDTH)
 	{

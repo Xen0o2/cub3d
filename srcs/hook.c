@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hook.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alecoutr <alecoutr@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 07:32:15 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/08/16 08:10:43 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/08/16 10:52:10 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ void	rotate_mouse(t_game *game)
 		mlx_get_mouse_pos(game->mlx, &x, &y);
 		difference = x - game->window_width / 2;
 		game->player->angle += difference * 1.5 / (game->window_width / 2);
-		mlx_set_mouse_pos(game->mlx, game->window_width / 2, game->window_height / 2);
+		mlx_set_mouse_pos(game->mlx, game->window_width / 2,
+			game->window_height / 2);
 		if (game->player->angle < 0)
 			game->player->angle += 2 * PI;
 		game->player->delta.x = cos(game->player->angle) * game->player->speed;

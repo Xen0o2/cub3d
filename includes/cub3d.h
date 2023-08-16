@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alecoutr <alecoutr@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 13:39:38 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/08/16 09:50:54 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/08/16 11:57:37 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ typedef struct s_player
 {
 	t_point	position;
 	t_point	delta;
-	t_ray	ray;
+	t_ray	r;
 	float	angle;
 	int		in_game;
 	int		speed;
@@ -148,11 +148,6 @@ typedef struct s_split
 	int		length;
 }	t_split;
 
-
-// EXIT
-void	exit_error(char *message, t_game *game);
-void	exit_success(t_game *game);
-
 // KEY HOOK
 void	key_hook(mlx_key_data_t keydata, void *param);
 void    collision(t_game *game);
@@ -176,16 +171,20 @@ void	init_parameters(t_game *game);
 void	init_default_values(t_game *game);
 void	init_default_values2(t_game *game);
 void	init_default_values3(t_game *game);
-void	init_map(t_game *game);
 void	load_render(t_game *game);
 void	parse_parameters(t_game *game);
 int		parameter_is_null(t_game *game);
 int		update_parameter(t_game *game, char **infos);
+
+// INIT MAP
+void	init_map(t_game *game);
 char	*get_first_wall(t_game *game);
 int		is_first_wall(char *line);
 int		is_map_character(char c);
 void    append_to_map(t_game *game, char *line, int i);
 void	fill_map(t_game *game);
+int		is_valid_char(t_game *game, int i, int x);
+void	define_spawn(t_game *game, int i, int x);
 
 // VERIF
 void			verif_args(int ac, char **av, t_game *game);
@@ -193,22 +192,41 @@ void			verif_parameters(t_game *game);
 unsigned long	verif_color(t_game *game, char *color);
 mlx_texture_t	*verif_texture(t_game *game, char *texture_path);
 
+// WALLS
+void	draw_walls(t_game *game);
+
+// MINIMAP
+void	draw_tile(t_game *game, int square_size, int x, int y);
+void	draw_minimap(t_game *game);
+
+// PLAYER
+void	draw_player(t_game *game);
 
 // DRAW
 void	draw_line(t_game *game, t_point begin, t_point end, int color);
 void	draw_square(t_game *game, t_point points[2], int color);
 t_point	create_point(float x, float y);
 
-// DRAW_ITEMS
-void	draw_player(t_game *game);
-void	draw_minimap(t_game *game);
-void	draw_rays(t_game *game);
-void	draw_horizontal_rays(t_game *game);
-void	draw_vertical_rays(t_game *game);
+// DRAW UTILS
+void	fix_value(float *value);
+void	calc_rays(t_game *game);
+void	get_pixel_color(t_game *game);
 
-// FREE
-void	free_all(char **tab);
-void	free_parameters(t_game *game);
+
+// HORIZONTAL RAYS
+void	draw_horizontal_rays(t_game *game);
+void	horizontal_condition(t_game *game, float atan);
+void	find_horizontal_wall(t_game *game);
+
+// VERTICAL RAYS
+void	draw_vertical_rays(t_game *game);
+void	vertical_condition(t_game *game, float ntan);
+void	find_vertical_wall(t_game *game);
+
+// TEXTURE
+void	define_texture(t_game *game);
+void	get_texture(t_game *game);
+
 
 // UTILS
 int				ft_strcmp(char *s1, char *s2);
@@ -226,8 +244,8 @@ float			ft_abs(int value);
 float			distance(t_point p1, t_point p2);
 int				is_digit(char *str);
 long long int	ft_atoi(const char *s);
-unsigned long 	create_RGBA(int r, int g, int b, int a);
-float   fix_ang(float a);
+unsigned long 	create_rgba(int r, int g, int b, int a);
+float			fix_ang(float a);
 
 // GET_NEXT_LINE
 char	*ft_read(int fd, char *all);
@@ -241,5 +259,13 @@ int	get_sep_nbr(char *s, char c);
 char	*create_malloc(char **tab, int length);
 char	**ft_freeall(char **tab, int length);
 char	**ft_split(char *s, char c);
+
+// FREE
+void	free_all(char **tab);
+void	free_parameters(t_game *game);
+
+// EXIT
+void	exit_error(char *message, t_game *game);
+void	exit_success(t_game *game);
 
 #endif

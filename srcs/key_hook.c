@@ -3,39 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   key_hook.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alecoutr <alecoutr@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:32:49 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/08/15 19:42:33 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/08/16 11:11:30 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void    collision(t_game *game)
+void	collision(t_game *game)
 {
-    game->player->ray.ixo = 0;
+	game->player->r.ixo = 0;
 	if (game->player->delta.x < 0)
-		game->player->ray.ixo = -20;
+		game->player->r.ixo = -20;
 	else
-		game->player->ray.ixo = 20;
-	game->player->ray.iyo = 0;
+		game->player->r.ixo = 20;
+	game->player->r.iyo = 0;
 	if (game->player->delta.y < 0)
-		game->player->ray.iyo = -20;
+		game->player->r.iyo = -20;
 	else
-		game->player->ray.iyo = 20;
-
-	game->player->ray.ipx = game->player->position.x / 64;
-	game->player->ray.ipx_add_ixo = (game->player->position.x + game->player->ray.ixo) / 64;
-	game->player->ray.ipx_sub_ixo = (game->player->position.x - game->player->ray.ixo) / 64;
-	game->player->ray.ipy = game->player->position.y / 64;
-	game->player->ray.ipy_add_iyo = (game->player->position.y + game->player->ray.iyo) / 64;
-	game->player->ray.ipy_sub_iyo = (game->player->position.y - game->player->ray.iyo) / 64;
+		game->player->r.iyo = 20;
+	game->player->r.ipx = game->player->position.x / 64;
+	game->player->r.ipx_add_ixo
+		= (game->player->position.x + game->player->r.ixo) / 64;
+	game->player->r.ipx_sub_ixo
+		= (game->player->position.x - game->player->r.ixo) / 64;
+	game->player->r.ipy = game->player->position.y / 64;
+	game->player->r.ipy_add_iyo
+		= (game->player->position.y + game->player->r.iyo) / 64;
+	game->player->r.ipy_sub_iyo
+		= (game->player->position.y - game->player->r.iyo) / 64;
 }
 
-void    rotate_key(t_game *game, mlx_key_data_t keydata)
+void	rotate_key(t_game *game, mlx_key_data_t keydata)
 {
-    if (keydata.key == MLX_KEY_A)
+	if (keydata.key == MLX_KEY_A)
 	{
 		game->player->angle -= 0.1;
 		if (game->player->angle < 0)
@@ -53,29 +56,34 @@ void    rotate_key(t_game *game, mlx_key_data_t keydata)
 	}
 }
 
-void    move_key(t_game *game, mlx_key_data_t keydata)
+void	move_key(t_game *game, mlx_key_data_t keydata)
 {
-    if (keydata.key == MLX_KEY_W)
+	if (keydata.key == MLX_KEY_W)
 	{
-		if (game->map_info->map[game->player->ray.ipy][game->player->ray.ipx_add_ixo] != '1')
+		if (game->map_info->map[game->player->r.ipy]
+			[game->player->r.ipx_add_ixo] != '1')
 			game->player->position.x += game->player->delta.x;
-		if (game->map_info->map[game->player->ray.ipy_add_iyo][game->player->ray.ipx] != '1')
+		if (game->map_info->map[game->player->r.ipy_add_iyo]
+			[game->player->r.ipx] != '1')
 			game->player->position.y += game->player->delta.y;
 	}
 	if (keydata.key == MLX_KEY_S)
 	{
-		if (game->map_info->map[game->player->ray.ipy][game->player->ray.ipx_sub_ixo] != '1')
+		if (game->map_info->map[game->player->r.ipy]
+			[game->player->r.ipx_sub_ixo] != '1')
 			game->player->position.x -= game->player->delta.x;
-		if (game->map_info->map[game->player->ray.ipy_sub_iyo][game->player->ray.ipx] != '1')
+		if (game->map_info->map[game->player->r.ipy_sub_iyo]
+			[game->player->r.ipx] != '1')
 			game->player->position.y -= game->player->delta.y;
 	}
 }
+
 void	key_hook(mlx_key_data_t keydata, void *param)
 {
 	t_game	*game;
-	
+
 	game = param;
-    collision(game);
+	collision(game);
 	rotate_key(game, keydata);
 	move_key(game, keydata);
 	if (keydata.key == MLX_KEY_M && keydata.action == MLX_PRESS)
@@ -89,7 +97,7 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 	}
 	mlx_delete_image(game->mlx, game->mlx_img);
 	game->mlx_img = mlx_new_image(game->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-	draw_rays(game);
+	draw_walls(game);
 	if (game->draw_minimap)
 		draw_minimap(game);
 	mlx_image_to_window(game->mlx, game->mlx_img, 0, 0);

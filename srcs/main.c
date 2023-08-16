@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alecoutr <alecoutr@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 13:40:36 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/08/16 08:25:16 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/08/16 11:55:47 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include <math.h>
 
 void	init_game(t_game *game, int ac, char **av)
 {
@@ -37,7 +36,7 @@ void	load_render(t_game *game)
 	if (game->mlx_img)
 		mlx_delete_image(game->mlx, game->mlx_img);
 	game->mlx_img = mlx_new_image(game->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-	draw_rays(game);
+	draw_walls(game);
 	if (game->draw_minimap)
 		draw_minimap(game);
 	mlx_image_to_window(game->mlx, game->mlx_img, 0, 0);
