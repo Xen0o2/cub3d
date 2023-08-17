@@ -6,7 +6,7 @@
 /*   By: alecoutr <alecoutr@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:32:49 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/08/16 16:35:32 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/08/17 08:18:47 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,16 +85,19 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 	game = param;
 	if (game->player->in_chat)
 	{
-		char	*copy;
-		int		i;
-		copy = malloc((ft_strlen(game->player->message) + 2) * sizeof(char));
-		i = -1;
-		while (game->player->message[++i])
-			copy[i] = game->player->message[i];
-		copy[i] = keydata.key;
-		copy[i + 1] = 0;
-		free(game->player->message);
-		game->player->message = copy;
+		if (keydata.action == MLX_PRESS)
+		{
+			char	*copy;
+			int		i;
+			copy = malloc((ft_strlen(game->player->message) + 2) * sizeof(char));
+			i = -1;
+			while (game->player->message && game->player->message[++i])
+				copy[i] = game->player->message[i];
+			copy[i] = keydata.key;
+			copy[i + 1] = 0;
+			free(game->player->message);
+			game->player->message = copy;
+		}
 		mlx_put_string(game->mlx, game->player->message, 10, 100);
 	}
 	else
@@ -107,6 +110,7 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 			game->player->in_chat = 1;
 			game->player->in_game = 0;
 			mlx_set_cursor_mode(game->mlx, MLX_MOUSE_NORMAL);
+			printf("%s\n", game->player->message);
 		}
 		if (keydata.key == MLX_KEY_M && keydata.action == MLX_PRESS)
 			game->draw_minimap = !game->draw_minimap;
